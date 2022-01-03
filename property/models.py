@@ -54,9 +54,19 @@ class Flat(models.Model):
         choices=NEW_BUILDINGS_CHOICES,
         default=None,
         db_index=True,)
+    
+    liked_by = models.ManyToManyField(
+        User,
+        related_name='liked_flat',
+        verbose_name='Кто лайкнул'
+    )
 
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
+
+    class Meta:
+        verbose_name = 'Квартира'
+        verbose_name_plural = 'Квартиры'
 
 
 class Likes(models.Model):
