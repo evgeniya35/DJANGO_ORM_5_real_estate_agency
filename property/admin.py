@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import Flat, Likes, Owner
 
 class FlatAdmin(admin.ModelAdmin):
-    list_display = ('address', 'price', 'new_building', 'construction_year', 'town', 'owners_phonenumber', 'owner_pure_phone')
+    list_display = ('address', 'price', 'new_building', 'construction_year', 'town')
     list_editable = ('new_building',)
     search_fields = ('town', 'address',)
     readonly_fields = ('created_at',)
