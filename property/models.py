@@ -93,5 +93,10 @@ class Owner(models.Model):
         )
     flat = models.ManyToManyField(Flat, related_name='link_owner', verbose_name='Квартиры в собственности')
 
+    class Meta:
+        verbose_name = 'Владелец'
+        verbose_name_plural = 'Владельцы'
+
+
     def __str__(self) -> str:
         return f'{self.owner}'
