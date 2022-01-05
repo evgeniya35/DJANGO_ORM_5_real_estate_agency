@@ -19,5 +19,6 @@ admin.site.register(Likes, LikesAdmin)
 
 class OwnerAdmin(admin.ModelAdmin):
     raw_id_fields = ('flat',)
+    list_display = ['owner', 'owners_phonenumber', 'owner_pure_phone',]
 
 admin.site.register(Owner, OwnerAdmin)
