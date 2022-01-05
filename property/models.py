@@ -87,3 +87,16 @@ class Likes(models.Model):
     class Meta:
         verbose_name = 'Жалоба'
         verbose_name_plural = 'Жалобы'
+
+
+class Owner(models.Model):
+    owner = models.CharField('ФИО владельца', max_length=200)
+    owners_phonenumber = models.CharField('Номер владельца', max_length=20)
+    owner_pure_phone = PhoneNumberField(
+        blank=True,
+        verbose_name='Нормализованный номер владельца'
+        )
+    flat = models.ManyToManyField(Flat, related_name='link_owner', verbose_name='Квартиры в собственности')
+
+    def __str__(self) -> str:
+        return f'{self.owner}'
