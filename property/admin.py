@@ -2,11 +2,13 @@ from django.contrib import admin
 
 from .models import Flat, Likes, Owner
 
+
 class OwnerInLine(admin.TabularInline):
     model = Owner.flat.through
     extra = 3
     raw_id_fields = ('owner',)
     classes = ('collapse',)
+
 
 class FlatAdmin(admin.ModelAdmin):
     list_display = ('address', 'price', 'new_building', 'construction_year', 'town')
@@ -22,15 +24,17 @@ class FlatAdmin(admin.ModelAdmin):
     )
     inlines = (OwnerInLine,)
 
-admin.site.register(Flat, FlatAdmin)
 
 class LikesAdmin(admin.ModelAdmin):
-    raw_id_fields = ('flat',)
+    list_display = ('author', 'flat',)
+    raw_id_fields = ('flat', 'author')
 
-admin.site.register(Likes, LikesAdmin)
 
 class OwnerAdmin(admin.ModelAdmin):
     raw_id_fields = ('flat',)
     list_display = ['owner', 'owners_phonenumber', 'owner_pure_phone',]
 
+
+admin.site.register(Flat, FlatAdmin)
 admin.site.register(Owner, OwnerAdmin)
+admin.site.register(Likes, LikesAdmin)

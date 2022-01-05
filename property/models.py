@@ -48,7 +48,11 @@ class Flat(models.Model):
         blank=True,
         db_index=True)
     
-    NEW_BUILDINGS_CHOICES = ((True, 'новостройка'), (False, 'старое здание'), (None, 'не заполнено'))
+    NEW_BUILDINGS_CHOICES = (
+        (True, 'новостройка'),
+        (False, 'старое здание'),
+        (None, 'не заполнено')
+        )
     new_building = models.NullBooleanField(
         'Новостройка',
         choices=NEW_BUILDINGS_CHOICES,
@@ -71,8 +75,16 @@ class Flat(models.Model):
 
 
 class Likes(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Кто жаловался')
-    flat = models.ForeignKey(Flat, on_delete=models.CASCADE, verbose_name= 'Квартира на которую жаловались')
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name='Кто жаловался'
+        )
+    flat = models.ForeignKey(
+        Flat,
+        on_delete=models.CASCADE,
+        verbose_name= 'Квартира на которую жаловались'
+        )
     text = models.TextField(blank=True, default=None, verbose_name='Текст жалобы')
 
     def __str__(self) -> str:
@@ -91,12 +103,15 @@ class Owner(models.Model):
         verbose_name='Нормализованный номер владельца',
         db_index=True
         )
-    flat = models.ManyToManyField(Flat, related_name='link_owner', verbose_name='Квартиры в собственности')
+    flat = models.ManyToManyField(
+        Flat,
+        related_name='link_owner',
+        verbose_name='Квартиры в собственности'
+        )
+
+    def __str__(self) -> str:
+        return f'{self.owner}'
 
     class Meta:
         verbose_name = 'Владелец'
         verbose_name_plural = 'Владельцы'
-
-
-    def __str__(self) -> str:
-        return f'{self.owner}'
