@@ -4,19 +4,22 @@ import phonenumbers
 from django.db import migrations
 
 
+def fill_pure_phonenumber(apps, schema_editor):
+    Flat = apps.get_model('property', 'Flat')
+    for flat in Flat.objects.all():
+        phone_number = phonenumbers.parse(flat.owners_phonenumber, 'RU')
+        if phonenumbers.is_valid_number_for_region(phone_number, 'RU'):
+            flat.owner_pure_phone = f'+{phone_number.country_code}{phone_number.national_number}'
+        else:
+            flat.owner_pure_phone = ''
+        flat.save()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
         ('property', '0008_auto_20220103_1420'),
     ]
-
-    def fill_pure_phonenumber(apps, schema_editor):
-        Flat = apps.get_model('property', 'Flat')
-        for flat in Flat.objects.all():
-            if flat.owners_phonenumber:
-                pass
-            #flat.save()
-
 
     operations = [
         migrations.RunPython(fill_pure_phonenumber),
