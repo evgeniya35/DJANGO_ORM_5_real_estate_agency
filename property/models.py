@@ -77,11 +77,13 @@ class Flat(models.Model):
 class Likes(models.Model):
     author = models.ForeignKey(
         User,
+        related_name='author_likes',
         on_delete=models.CASCADE,
         verbose_name='Кто жаловался'
         )
     flat = models.ForeignKey(
         Flat,
+        related_name='flat_likes',
         on_delete=models.CASCADE,
         verbose_name= 'Квартира на которую жаловались'
         )
@@ -105,7 +107,7 @@ class Owner(models.Model):
         )
     flat = models.ManyToManyField(
         Flat,
-        related_name='link_owner',
+        related_name='flat_owners',
         verbose_name='Квартиры в собственности'
         )
 

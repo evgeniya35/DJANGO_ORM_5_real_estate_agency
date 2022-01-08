@@ -7,15 +7,17 @@ def fill_flat(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     Owner = apps.get_model('property', 'Owner')
     for flat in Flat.objects.all():
-        flat.link_owner.set(Owner.objects.filter(
+        flat.flat_owners.set(
+            Owner.objects.filter(
             owner=flat.owner,
             owners_phonenumber=flat.owners_phonenumber,
-        ))
+            )
+        )
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('property', '0012_auto_20220105_1847'),
+        ('property', '0011_fillOwner'),
     ]
 
     operations = [

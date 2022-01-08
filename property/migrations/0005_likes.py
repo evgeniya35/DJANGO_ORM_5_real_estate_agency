@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('property', '0004_auto_20220103_1157'),
+        ('property', '0004_fillNewBulding'),
     ]
 
     operations = [
@@ -18,8 +18,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('text', models.TextField(blank=True, default=None, verbose_name='Текст жалобы')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Кто жаловался')),
-                ('flat', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='property.Flat', verbose_name='Квартира на которую жаловались')),
+                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, related_name='author_likes', verbose_name='Кто жаловался')),
+                ('flat', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='property.Flat', related_name='flat_likes', verbose_name='Квартира на которую жаловались')),
             ],
             options={
                 'verbose_name': 'Жалоба',

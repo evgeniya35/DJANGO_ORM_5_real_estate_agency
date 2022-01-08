@@ -7,7 +7,7 @@ import phonenumber_field.modelfields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('property', '0009_auto_20220103_1431'),
+        ('property', '0009_fillPurePhoneNumber'),
     ]
 
     operations = [
@@ -15,10 +15,10 @@ class Migration(migrations.Migration):
             name='Owner',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('owner', models.CharField(max_length=200, verbose_name='ФИО владельца')),
-                ('owners_phonenumber', models.CharField(max_length=20, verbose_name='Номер владельца')),
+                ('owner', models.CharField(max_length=200, db_index=True, verbose_name='ФИО владельца')),
+                ('owners_phonenumber', models.CharField(max_length=20, db_index=True, verbose_name='Номер владельца')),
                 ('owner_pure_phone', phonenumber_field.modelfields.PhoneNumberField(blank=True, max_length=128, region=None, verbose_name='Нормализованный номер владельца')),
-                ('flat', models.ManyToManyField(related_name='link_owner', to='property.Flat', verbose_name='Квартиры в собственности')),
+                ('flat', models.ManyToManyField(related_name='flat_owners', to='property.Flat', verbose_name='Квартиры в собственности')),
             ],
         ),
     ]
